@@ -146,6 +146,24 @@ class SearchBar extends Component {
 }
 ```
 
+#### "Downward data flow" - the common most parent component should be responsible for retrieving data
+```javascript
+//passing props from parent component to child component
+//if the state changes, VideoList will be re-rendered with the new state
+<VideoList videos={this.state.videos}/> //curly braces for referring to javascript variables within JSX
+```
+
+#### Applying styles to components
+```javascript
+const VideoList = (props) => {
+  return (
+    //notice we use className instead of class because class is a javascript keyword
+    <ul className="col-md-4 list-group">
+    </ul>
+  );
+}
+```
+
 # ES6
 
 #### If the key and value of an object are of the same variable name, we can condense it
@@ -154,6 +172,28 @@ this.setState({ videos : videos });
 //can be written as
 this.setState({ videos });
 ```
+
+#### If we simply want to work with a particular property from props
+```javascript
+const VideoListItem = (props) => {
+  const video = props.video;
+  return (
+    <li className="list-group-item">Video</li>
+  );
+}
+//can be condensed as
+const VideoListItem = ({video}) => {
+  return (
+    <li className="list-group-item">Video</li>
+  );
+}
+```
+
+#### String interpolation
+```javascript
+const url = `https://www.youtube.com/embed/${videoId}`;
+```
+
 
 # NPM
 
