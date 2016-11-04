@@ -43,6 +43,57 @@ var App = function App() {
 };
 ```
 
+#### To export component so that others maybe import
+```javascript
+export default SearchBar;
+```
+
+#### Difference between library imports and imports from personal files
+```javascript
+//Library are namespaced there will be only one copy of react in the node_modules folder that we installed to
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+//There may be dozens of search_bar.js in our folders hence we have to specify the relative path from which its being imported i.e. index.js
+import SearchBar from './components/search_bar'
+```
+
+#### Functional component vs Class based component
+```javascript
+//functional component
+import React from 'react';
+
+const SearchBar = () => {
+  return <input />;
+}
+```
+
+```javascript
+//class based component
+import React, {Component} from 'react'; //syntatic sugar for const Component = React.Component
+
+class SearchBar extends Component {
+  //this is a method, notice there is no : after render?
+  render() {
+    return <input/>
+  }
+}
+```
+
+#### Handling events
+```javascript
+class SearchBar extends Component {
+  //this is a method, notice there is no : after render?
+  render() {
+    return <input onChange={this.onInputChange}/>
+  }
+  onInputChange(event) {
+    console.log(event.target.value)
+  }
+}
+```
+
+
 # NPM
 
 #### To install new packages and include in package.json
