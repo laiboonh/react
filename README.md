@@ -85,10 +85,63 @@ class SearchBar extends Component {
 class SearchBar extends Component {
   //this is a method, notice there is no : after render?
   render() {
+    //to reference a javascript variable inside JSX we put it in braces {}
     return <input onChange={this.onInputChange}/>
   }
   onInputChange(event) {
     console.log(event.target.value)
+  }
+}
+```
+
+### State
+#### "State is a plain Javascript object used to record and react to user events. Each class based component has its own state object. If the state object changes, the component will be re-rendered."
+
+#### Initialize state
+```javascript
+class SearchBar extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { term : '' };
+  }
+  ...
+}
+```
+#### Setting state
+```javascript
+class SearchBar extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { term : '' }; //this should be the only place where we use this.state=
+  }
+  render() {
+    //use this.setState to change state -- good functional programming immutability practice
+    return (
+      <div>
+        <input onChange={event => this.setState({term : event.target.value})}/>
+        //to reference a javascript variable inside JSX we put it in braces {}
+        Value of the input : {this.state.term}
+      </div>
+    );
+  }
+}
+```
+
+#### Controlled field is a form element whereby the value is set by the state and not the other way round
+```javascript
+class SearchBar extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { term : '' }; //this should be the only place where we use this.state=
+  }
+  render() {    
+    return (
+      <div>      
+        <input onChange={event => this.setState({term : event.target.value})}/>
+        //controlled field    
+        <input value = {this.state.term} /> //declarative syntax another good functional programming practice
+      </div>
+    );
   }
 }
 ```
