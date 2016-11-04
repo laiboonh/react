@@ -42,3 +42,8 @@ var App = function App() {
   );
 };
 ```
+
+# NPM
+
+#### To install new packages and include in package.json
+`npm install --save youtube-api-search`
