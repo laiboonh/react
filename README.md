@@ -8,14 +8,24 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 ```
 
-#### **Component** is used to generate HTML. To render this we have to attach it to the DOM
+#### **Component** is used to generate HTML.
 ```javascript
+//This is a class of a component not an instance
+const App = () => {
+  return <div>Hi</div>
+}
+//This is an instance
+<App></App>
+```
 
+#### To render a component we have to attach it to the DOM
+```javascript
+ReactDOM.render(<App />, document.querySelector(".container"));
 ```
 
 #### **JSX** allows us to write what looks like HTML tags in Javascript
 ```javascript
-const App = function() {
+const App = () => {
   return <div>Hi</div>
 }
 ```
@@ -25,7 +35,7 @@ const App = function() {
 "use strict";
 
 var App = function App() {
-  return React.createElement(
+  return React.createElement( //createElement creates an instance of the component class. i.e. div
     "div",
     null,
     "Hi"
