@@ -146,6 +146,14 @@ class SearchBar extends Component {
 }
 ```
 
+# ES6
+
+#### If the key and value of an object are of the same variable name, we can condense it
+```javascript
+this.setState({ videos : videos });
+//can be written as
+this.setState({ videos });
+```
 
 # NPM
 
