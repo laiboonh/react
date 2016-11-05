@@ -168,8 +168,10 @@ const VideoList = (props) => {
 
 ### Reducers
 #### A function that returns a piece of the application state
+#### Note that state parameter is the part of the application state that it helped to produce in the first place.
+#### Note that reducer will be called whenever an Action object is dispatched and passed into reducer via the action parameter.
 ```javascript
-export default function() {
+export default function(state, action) {
   return [
     {title : 'Javascript: The Good Parts'},
     {title : 'Harry Potter'},
@@ -183,7 +185,7 @@ export default function() {
 #### A react "smart-component" that has a direct connection to the state managed by Redux
 ```javascript
 import { connect } from 'react-redux';
-//If state changes, container will re-render
+//When application state changes, container will re-render
 function mapStateToProps(state) {
   //Whatever is returned will show up as props in BookList
   return {
@@ -194,6 +196,31 @@ function mapStateToProps(state) {
 export default connect(mapStateToProps)(BookList);
 ```
 
+#### An Action Creator is a function that returns an Action
+#### To bind an Action Creator to a Container
+```javascript
+//Anything returned from this function will end up as props on the BookList container
+function mapDispatchToProps(dispatch) {
+  //Dispatch is in charged to passing Action to all Reducers.
+  //When selectBook is called, the result (Action) should by passed to all Reducers via dispatch
+  return bindActionCreators({ selectBook: selectBook }, dispatch);
+}
+
+//connect is used to create a container (smart-component)
+export default connect(mapStateToProps, mapDispatchToProps)(BookList);
+```
+
+#### Action is a Javascript object that is automatically sent to ALL Reducers. Reducers can then choose to return a different piece of state depending on the Action. Because state changed, containers will re-render.
+#### Consuming an Action in a Reducer
+```javascript
+export default function(state = null, action) {
+  switch(action.type) {
+    case 'BOOK_SELECTED' :
+      return action.payload; //good functional practice to not mutate state, return fresh object
+  }
+  return state;
+}
+```
 
 # ES6
 
@@ -229,6 +256,14 @@ const VideoListItem = ({video, onVideoSelect}) => {
 #### String interpolation
 ```javascript
 const url = `https://www.youtube.com/embed/${videoId}`;
+```
+
+#### Handling undefined values
+```javascript
+//set state to null if its undefined
+export default function(state = null, action) {
+  ...
+}
 ```
 
 # Lodash
