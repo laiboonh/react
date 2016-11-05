@@ -187,6 +187,12 @@ const VideoListItem = ({video}) => {
     <li className="list-group-item">Video</li>
   );
 }
+//if you want to access multiple properties
+const VideoListItem = ({video, onVideoSelect}) => {
+  return (
+    <li className="list-group-item">Video</li>
+  );
+}
 ```
 
 #### String interpolation
@@ -194,6 +200,13 @@ const VideoListItem = ({video}) => {
 const url = `https://www.youtube.com/embed/${videoId}`;
 ```
 
+# LODASH
+
+#### Throttling
+```javascript
+//this function can only be called every 300ms
+const videoSearch = _.debounce((term) => this.videoSearch(term),300);
+```
 
 # NPM
 
