@@ -169,6 +169,21 @@ const VideoList = (props) => {
 ### Reducers
 #### A function that returns a piece of the application state
 
+### Container
+#### A container is a react "smart-component" that has a direct connection to the state managed by Redux
+```javascript
+import { connect } from 'react-redux';
+//If state changes, container will re-render
+function mapStateToProps(state) {
+  //Whatever is returned will show up as props in BookList
+  return {
+    books : state.books
+  }
+}
+//connect is used to create a container (smart-component)
+export default connect(mapStateToProps)(BookList);
+```
+
 
 # ES6
 
