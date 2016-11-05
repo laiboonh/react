@@ -164,13 +164,23 @@ const VideoList = (props) => {
 }
 ```
 # Redux
-#### A Javascript object that contains the application state
+#### A Javascript object that contains the whole application state
 
 ### Reducers
 #### A function that returns a piece of the application state
+```javascript
+export default function() {
+  return [
+    {title : 'Javascript: The Good Parts'},
+    {title : 'Harry Potter'},
+    {title : 'The Dark Rower'},
+    {title : 'Eloquent Ruby'}
+  ];
+}
+```
 
 ### Container
-#### A container is a react "smart-component" that has a direct connection to the state managed by Redux
+#### A react "smart-component" that has a direct connection to the state managed by Redux
 ```javascript
 import { connect } from 'react-redux';
 //If state changes, container will re-render
