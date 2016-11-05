@@ -163,9 +163,11 @@ const VideoList = (props) => {
   );
 }
 ```
-# Redux - A Javascript object that contains the application state 
+# Redux
+#### A Javascript object that contains the application state
 
-### Reducers - A function that returns a piece of the application state
+### Reducers
+#### A function that returns a piece of the application state
 
 
 # ES6
