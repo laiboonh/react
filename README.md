@@ -200,10 +200,11 @@ const VideoListItem = ({video, onVideoSelect}) => {
 const url = `https://www.youtube.com/embed/${videoId}`;
 ```
 
-# LODASH
+# Lodash
 
 #### Throttling
 ```javascript
+import _ from 'lodash';
 //this function can only be called every 300ms
 const videoSearch = _.debounce((term) => this.videoSearch(term),300);
 ```
