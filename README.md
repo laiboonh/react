@@ -137,14 +137,44 @@ class SearchBar extends Component {
   render() {    
     return (
       <div>      
-        <input onChange={event => this.setState({term : event.target.value})}/>
         //controlled field    
-        <input value = {this.state.term} /> //declarative syntax another good functional programming practice
+        <input
+          onChange={event => this.setState({term : event.target.value})}
+          value = {this.state.term} /> //declarative syntax another good functional programming practice
       </div>
     );
   }
 }
 ```
+#### Whenever we have a callback function that make references to 'this', we need to bind the context
+```javascript
+class SearchBar extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { term : '' };
+    //we bind onInputChange to this class and then replace the current this.onInputChange with the new definition
+    this.onInputChange = this.onInputChange.bind(this);
+  }
+  onInputChange(event) {
+    //makes references to 'this'
+    this.setState({
+      term: event.target.value
+    });
+  }
+  render() {    
+    return (
+      <div>      
+        <input
+          //Notice we use a class method instead of a fat arrow function this time to handle onChange
+          onChange={this.onInputChange}
+          value = {this.state.term} />
+      </div>
+    );
+  }
+}
+```
+
+
 
 #### "Downward data flow" - the common most parent component should be responsible for retrieving data
 ```javascript
@@ -196,7 +226,7 @@ function mapStateToProps(state) {
 export default connect(mapStateToProps)(BookList);
 ```
 
-#### An Action Creator is a function that returns an Action
+### An Action Creator is a function that returns an Action
 #### To bind an Action Creator to a Container
 ```javascript
 //Anything returned from this function will end up as props on the BookList container
@@ -210,7 +240,7 @@ function mapDispatchToProps(dispatch) {
 export default connect(mapStateToProps, mapDispatchToProps)(BookList);
 ```
 
-#### Action is a Javascript object that is automatically sent to ALL Reducers. Reducers can then choose to return a different piece of state depending on the Action. Because state changed, containers will re-render.
+### Action is a Javascript object that is automatically sent to ALL Reducers. Reducers can then choose to return a different piece of state depending on the Action. Because state changed, containers will re-render.
 #### Consuming an Action in a Reducer
 ```javascript
 export default function(state = null, action) {
@@ -221,6 +251,28 @@ export default function(state = null, action) {
   return state;
 }
 ```
+
+### Middleware is a gatekeeper between the Action and the Reducers. They are just functions that Action pass through before hitting the Reducers
+#### Hooking up the middleware
+```javascript
+import ReduxPromise from 'redux-promise';
+const createStoreWithMiddleware = applyMiddleware(ReduxPromise)(createStore);
+```
+#### ReduxPromise looks at the Action coming in, notices that it is a promise, stops the Action until the promise is resolved, creates a new Action with result as the payload. i.e. unwraps the promise
+```javascript
+export function fetchWeather(city) {
+  const url = `${ROOT_URL}&q=${city},us`;
+  //request is a promise
+  const request = axois.get(url);
+  //returns an Action
+  return {
+    type : FETCH_WEATHER,
+    payload : request
+  }
+}
+```
+
+
 
 # ES6
 
