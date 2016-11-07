@@ -177,8 +177,6 @@ class SearchBar extends Component {
 }
 ```
 
-
-
 #### "Downward data flow" - the common most parent component should be responsible for retrieving data
 ```javascript
 //passing props from parent component to child component
@@ -196,6 +194,50 @@ const VideoList = (props) => {
   );
 }
 ```
+
+#### Routing via react-router
+#### How to hook up router
+```javascript
+import { Router, browserHistory } from 'react-router';
+
+<Provider store={createStoreWithMiddleware(reducers)}>
+  //browserHistory an object that tells react-router how to interpret changes in url
+  //E.g. http://www.blogger.com/posts/5 router interpret everything after protocol i.e. /posts/5
+  <Router history="browserHistory"/>
+</Provider>
+```
+#### Defining the routes
+```javascript
+//routes.js
+import React from 'react';
+import { Route, IndexRoute } from 'react-router';
+import App from './components/app';
+
+export default (
+  <Route path="/" component={App} />
+    <IndexRoute component={PostIndex} /> //nested routes
+  </Route>
+);
+//components/app.js
+export default class App extends Component {
+  render() {
+    return (
+      <div>
+        {this.props.children} //we need this because of nested routes
+      </div>
+    );
+  }
+}
+//index.js
+import routes from './routes';
+
+<Provider store={createStoreWithMiddleware(reducers)}>
+  <Router history={browserHistory} routes={routes}/>
+</Provider>
+```
+
+
+
 # Redux
 #### A Javascript object that contains the whole application state
 
