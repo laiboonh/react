@@ -1,4 +1,7 @@
 # React
+### Design
+#### Q1. Is it going to hook on to Redux? Yes - Container, No - Component
+#### Q2. Is it going to require state? Yes - Class based Component, No - Functional Component
 
 #### To be able to access variables in other Javascript files
 ```javascript
@@ -219,6 +222,7 @@ import { connect } from 'react-redux';
 function mapStateToProps(state) {
   //Whatever is returned will show up as props in BookList
   return {
+    //state.books because books is the key defined in reducers/index.js
     books : state.books
   }
 }
@@ -317,6 +321,38 @@ export default function(state = null, action) {
   ...
 }
 ```
+
+### Creating new array instead of mutating it
+```javascript
+//we do not use state.push : good functional practice to not manipulate state
+return state.concat([action.payload.data]);
+//can be written as
+return [action.payload.data, ...state];
+```
+
+### ES6 Syntax Condensing
+```javascript
+function mapStateToProps(state) {
+  return { weather: state.weather }
+}
+//We just want to access one variable in state, hence
+function mapStateToProps({weather}) {
+  return { weather: weather }
+}
+//Key and value of same variable name
+function mapStateToProps({weather}) {
+  return { weather }
+}
+```
+
+### ES6 Syntax destructuring
+```javascript
+const lon = cityData.city.coord.lat;
+const lat = cityData.city.coord.lat;
+//can be re-written as
+const {lon, lat} = cityData.city.coord;
+```
+
 
 # Lodash
 
