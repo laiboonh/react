@@ -215,7 +215,11 @@ import App from './components/app';
 
 export default (
   <Route path="/" component={App} />
+    //notice that IndexRoute do not have a path parameter
+    //if path is "/" App and PostIndex is shown
     <IndexRoute component={PostIndex} /> //nested routes
+    //if path is "/greet" App and Greeting is shown
+    <Route path="greet" component={Greeting} />
   </Route>
 );
 //components/app.js
@@ -236,6 +240,19 @@ import routes from './routes';
 </Provider>
 ```
 
+#### Component Lifecycle method
+```javascript
+class PostsIndex extends Component {
+  componentWillMount() {
+    //componentWillMount will be called by react when the component is about to be rendered and will only be called once
+  }
+  render() {
+    return(
+      <div>Blogs</div>
+    );
+  }
+}
+```
 
 
 # Redux
@@ -284,6 +301,11 @@ function mapDispatchToProps(dispatch) {
 
 //connect is used to create a container (smart-component)
 export default connect(mapStateToProps, mapDispatchToProps)(BookList);
+```
+####Shorthand
+```javascript
+//we do not need to dabble with mapDispatchToProps or bindActionCreators
+export default connect(mapStateToProps, { selectBook })(BookList);
 ```
 
 ### Action is a Javascript object that is automatically sent to ALL Reducers. Reducers can then choose to return a different piece of state depending on the Action. Because state changed, containers will re-render.
@@ -364,7 +386,7 @@ export default function(state = null, action) {
 }
 ```
 
-### Creating new array instead of mutating it
+#### Creating new array instead of mutating it
 ```javascript
 //we do not use state.push : good functional practice to not manipulate state
 return state.concat([action.payload.data]);
@@ -372,7 +394,7 @@ return state.concat([action.payload.data]);
 return [action.payload.data, ...state];
 ```
 
-### ES6 Syntax Condensing
+#### ES6 Syntax Condensing
 ```javascript
 function mapStateToProps(state) {
   return { weather: state.weather }
@@ -387,7 +409,7 @@ function mapStateToProps({weather}) {
 }
 ```
 
-### ES6 Syntax destructuring
+#### ES6 Syntax de-structuring
 ```javascript
 const lon = cityData.city.coord.lat;
 const lat = cityData.city.coord.lat;
@@ -395,6 +417,15 @@ const lat = cityData.city.coord.lat;
 const {lon, lat} = cityData.city.coord;
 ```
 
+#### ES6 Syntax
+```javascript
+switch(action.type) {
+  case FETCH_POSTS:
+    return { ...state, all:action.payload.data }; //take whatever 'state' is and add on 'all'
+  default:
+    return state;
+}
+```
 
 # Lodash
 
