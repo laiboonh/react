@@ -1,7 +1,10 @@
 # React
-### Design
+
+## Design
 #### Q1. Is it going to hook on to Redux? Yes - Container, No - Component
 #### Q2. Is it going to require state? Yes - Class based Component, No - Functional Component
+
+## Implementation
 
 #### To be able to access variables in other Javascript files
 ```javascript
@@ -195,7 +198,8 @@ const VideoList = (props) => {
 }
 ```
 
-#### Routing via react-router
+## Routing via react-router
+
 #### How to hook up router
 ```javascript
 import { Router, browserHistory } from 'react-router';
@@ -253,7 +257,14 @@ class PostsIndex extends Component {
   }
 }
 ```
-
+#### Link component from react-router
+```javascript
+import {Link} from 'react-router';
+...
+<Link to="/posts/new" className="btn btn-primary">
+Add a Post
+</Link>
+```
 
 # Redux
 #### A Javascript object that contains the whole application state
@@ -302,7 +313,7 @@ function mapDispatchToProps(dispatch) {
 //connect is used to create a container (smart-component)
 export default connect(mapStateToProps, mapDispatchToProps)(BookList);
 ```
-####Shorthand
+#### Shorthand for mapDispatchToProps
 ```javascript
 //we do not need to dabble with mapDispatchToProps or bindActionCreators
 export default connect(mapStateToProps, { selectBook })(BookList);
@@ -320,7 +331,9 @@ export default function(state = null, action) {
 }
 ```
 
-### Middleware is a gatekeeper between the Action and the Reducers. They are just functions that Action pass through before hitting the Reducers
+## Middleware
+#### A gatekeeper between the Action and the Reducers. They are just functions that Action pass through before hitting the Reducers
+
 #### Hooking up the middleware
 ```javascript
 import ReduxPromise from 'redux-promise';
@@ -338,6 +351,75 @@ export function fetchWeather(city) {
     payload : request
   }
 }
+```
+
+## Handling forms using redux-form
+
+#### Hook up redux-form to reducer
+```javascript
+import { reducer as formReducer } from 'redux-form';
+
+import PostReducer from './reducer_posts';
+const rootReducer = combineReducers({
+  posts: PostReducer,
+  form: formReducer
+});
+```
+#### Hook up the redux-form to component
+```javascript
+//connect 1st argument is mapStateToProps 2nd argument is mapDispatchToProps
+//reduxForm 1st argument is form config, 2nd is mapStateToProps 3rd is mapDispatchToProps
+export default reduxForm({
+  form: 'PostsNew',
+  fields: ['title','categories','content']
+})(PostsNew);
+```
+#### Hook up reduxForm's config object to form input
+```javascript
+render(){
+  const { fields : { title, categories, content}, handleSubmit } = this.props;
+  ...
+  return(){
+    //deconstructs title object and attaches those properties to input itself
+    <input type="text" className="form-control" {...title} />
+  }  
+}
+```
+####Form validation
+```javascript
+<div className="">
+  {title.touched ? title.error : ""}
+</div>
+...
+function validate(values) {
+    const errors = {};
+    if(!values.title) {
+      errors.title = "Enter a title!"
+    }
+    if(!values.categories) {
+      errors.categories = "Enter categories!"
+    }
+    if(!values.content) {
+      errors.content = "Enter a content!"
+    }
+    return errors;
+}
+
+export default reduxForm({
+  form: 'PostsNew',
+  fields: ['title','categories','content'],
+  validate
+}, null, { createPost })(PostsNew);
+```
+
+## redux-thunk
+#### Vanilla redux Action Creators are expected to return an object which is the Action object. With redux-thunk they can now return a function
+```javascript
+return (dispatch)=>{
+  request.then((data)=>{
+    dispatch({type: 'FETCH_POSTS', payload: data});
+  });
+};
 ```
 
 
@@ -407,6 +489,13 @@ function mapStateToProps({weather}) {
 function mapStateToProps({weather}) {
   return { weather }
 }
+```
+```javascript
+const handleSubmit = this.props.handleSubmit
+const title = this.props.fields.title;
+...
+//can be re-written as
+const { fields : { title, categories, content }, handleSubmit } = this.props;
 ```
 
 #### ES6 Syntax de-structuring
