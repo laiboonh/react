@@ -529,3 +529,12 @@ const videoSearch = _.debounce((term) => this.videoSearch(term),300);
 
 #### To install new packages and include in package.json
 `npm install --save youtube-api-search`
+
+# Deployment
+
+#### Add or change these build steps in package.json
+#### You will need the simple express app server.js and heroku to run these build steps
+```javascript
+"postinstall": "webpack -p",
+"start": "node server.js"
+```
