@@ -79,7 +79,7 @@ const SearchBar = () => {
 import React, {Component} from 'react'; //syntatic sugar for const Component = React.Component
 
 class SearchBar extends Component {
-  //this is a method, notice there is no : after render?
+  //this is a method, notice there is no ; after render?
   render() {
     return <input/>
   }
@@ -89,7 +89,7 @@ class SearchBar extends Component {
 #### Handling events
 ```javascript
 class SearchBar extends Component {
-  //this is a method, notice there is no : after render?
+  //this is a method, notice there is no ; after render?
   render() {
     //to reference a javascript variable inside JSX we put it in braces {}
     return <input onChange={this.onInputChange}/>
