@@ -1,0 +1,15 @@
+[submodule "youtube_search"]
+	path = youtube_search
+	url = https://github.com/laiboonh/youtube_search.git
+[submodule "blog"]
+	path = blog
+	url = https://github.com/laiboonh/blog.git
+[submodule "book_list"]
+	path = book_list
+	url = https://github.com/laiboonh/book_list.git
+[submodule "weather"]
+	path = weather
+	url = https://github.com/laiboonh/weather.git
+[submodule "testing"]
+	path = testing
+	url = https://github.com/laiboonh/testing.git
